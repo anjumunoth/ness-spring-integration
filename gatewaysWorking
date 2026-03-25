@@ -1,0 +1,57 @@
+┌──────────────────────┐
+│ Application Code     │
+│ orderGateway.place() │
+└─────────┬────────────┘
+          |
+          | method invocation
+          v
+┌──────────────────────────────┐
+│ Spring Proxy for Gateway     │
+│ - inspect method metadata    │
+│ - map args to payload/header │
+│ - create Message<?>          │
+│ - create temp reply channel  │
+│ - set error channel          │
+└─────────┬────────────────────┘
+          |
+          | send request
+          v
+┌──────────────────────────────┐
+│ Request Channel              │
+└─────────┬────────────────────┘
+          |
+          v
+┌──────────────────────────────┐
+│ Integration Flow             │
+│  transformer                 │
+│  filter                      │
+│  router                      │
+│  service activator           │
+└─────────┬────────────────────┘
+          |
+          | handler returns value
+          v
+┌──────────────────────────────┐
+│ Reply Message Created        │
+│ payload = business result    │
+└─────────┬────────────────────┘
+          |
+          | send to replyChannel
+          v
+┌──────────────────────────────┐
+│ Temporary Reply Channel      │
+└─────────┬────────────────────┘
+          |
+          | gateway receives
+          v
+┌──────────────────────────────┐
+│ Gateway Proxy                │
+│ - wait for reply             │
+│ - handle timeout/error       │
+│ - convert payload            │
+└─────────┬────────────────────┘
+          |
+          v
+┌──────────────────────┐
+│ Caller gets result   │
+└──────────────────────┘

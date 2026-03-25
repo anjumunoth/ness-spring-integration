@@ -1,0 +1,63 @@
+Java version 17 or higher
+Docker 
+Docker desktop
+MySQL
+RabbitMQ
+micrometer
+Prometheus
+
+Spring Examples :
+https://spring.io/guides
+
+
+Spring examples:
+https://www.javacodegeeks.com/spring-integration-tutorials
+
+check the dependency tree:
+mvn dependency:tree 
+
+mvn dependency:tree | findstr integration
+
+mvn dependency:list 
+
+
+On Windows, you can still inspect your Maven dependencies — you just need to use commands that work in PowerShell or Command Prompt instead of relying on `grep`. Here are the equivalents:
+
+---
+
+## 🔎 Commands to Check Dependencies on Windows
+
+### 1. Using Maven Dependency Tree
+Run this in your project root:
+```powershell
+mvn dependency:tree
+```
+This prints the entire dependency tree. Since `grep` isn’t available, you can filter with PowerShell:
+
+```powershell
+mvn dependency:tree | findstr integration
+```
+
+This will show only lines containing `integration` (e.g., `spring-integration-core`, `spring-integration-webflux`, etc.).
+
+---
+
+### 2. Using Dependency List
+Another option:
+```powershell
+mvn dependency:list
+```
+And filter:
+```powershell
+mvn dependency:list | findstr integration
+```
+
+---
+
+### 3. Check Effective POM
+If you want to see the resolved versions:
+```powershell
+mvn help:effective-pom | findstr integration
+```
+
+mvn dependency:tree | findstr spring-integration-file
